@@ -2,8 +2,8 @@
 Qiskit implementation of Quantum Fourier Transform (QFT) and conversion from classical to quantum circuits in the course [QPROG](https://utbildning.su.se/english/education/course-catalogue/ml/ml730n) at Department of Computer and System Sciences
 
 ## Authors
-- Lars Herbold
 - Fredrik Etsare
+- Jonas Hofmann
 
 ## Install
 ```bash
