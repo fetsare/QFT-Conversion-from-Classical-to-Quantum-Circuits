@@ -67,7 +67,16 @@ class ClassicalCircuit:
             quantumCircuit.barrier()
 
     def convert_step_2(self, quantumCircuit):
-        pass
+        for gate in reversed(self.gates):
+            match gate[1]:
+                case "and":
+                    a, b, c = gate[0], gate[2], gate[3]
+                    quantumCircuit.ccx(b, c, a)
+                case "not":
+                    a, b = gate[0], gate[2]
+                    quantumCircuit.cx(b, a)
+                    quantumCircuit.x(a)
+            quantumCircuit.barrier()
 
     def convert(self, quantumCircuit):
         pass
