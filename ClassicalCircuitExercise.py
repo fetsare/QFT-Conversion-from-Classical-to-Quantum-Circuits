@@ -79,7 +79,17 @@ class ClassicalCircuit:
             quantumCircuit.barrier()
 
     def convert(self, quantumCircuit):
-        pass
+        self.convert_step_1(quantumCircuit)
+        
+        n_wires = self.n_inputs + self.n_outputs + self.n_internal
+        
+        for i, output_gate in enumerate(self.output_gates):
+            a = output_gate
+            a_prime = n_wires + i
+            quantumCircuit.cx(a, a_prime)
+        
+        quantumCircuit.barrier()
+        self.convert_step_2(quantumCircuit)
 
 
 cc = ClassicalCircuit("circuit.txt")
