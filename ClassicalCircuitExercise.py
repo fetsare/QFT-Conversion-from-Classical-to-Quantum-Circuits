@@ -55,84 +55,11 @@ class ClassicalCircuit:
         print()
 
     def convert_step_1(self, quantumCircuit):
-        for gate in self.gates:
-            match gate[1]:
-                case "and":
-                    a, b, c = gate[0], gate[2], gate[3]
-                    quantumCircuit.ccx(b, c, a)
-                case "not":
-                    a, b = gate[0], gate[2]
-                    quantumCircuit.x(a)
-                    quantumCircuit.cx(b, a)
-                case "or":
-                    pass
-                case "xor":
-                    # bonus, cnot kinda is xor
-                    a, b, c = gate[0], gate[2], gate[3]
-                    quantumCircuit.cx(b, a)
-                    quantumCircuit.cx(c, a)
-                case "nand":
-                    # bonus, toffoli is and so not + toffoli = nand
-                    a, b, c = gate[0], gate[2], gate[3]
-                    quantumCircuit.ccx(b, c, a)
-                    quantumCircuit.x(a)
-            quantumCircuit.barrier()
+        pass
 
     def convert_step_2(self, quantumCircuit):
-        for gate in reversed(self.gates):
-            match gate[1]:
-                case "and":
-                    a, b, c = gate[0], gate[2], gate[3]
-                    quantumCircuit.ccx(b, c, a)
-                case "not":
-                    a, b = gate[0], gate[2]
-                    quantumCircuit.cx(b, a)
-                    quantumCircuit.x(a)
-                case "or":
-                    pass
-                case "xor":
-                    # bonus, reversed
-                    a, b, c = gate[0], gate[2], gate[3]
-                    quantumCircuit.cx(c, a)
-                    quantumCircuit.cx(b, a)
-                case "nand":
-                    # bonus, reversed
-                    a, b, c = gate[0], gate[2], gate[3]
-                    quantumCircuit.x(a)
-                    quantumCircuit.ccx(b, c, a)
-            quantumCircuit.barrier()
+        pass
 
     def convert(self, quantumCircuit):
-        self.convert_step_1(quantumCircuit)
+        pass
 
-        n_wires = self.n_inputs + self.n_outputs + self.n_internal
-
-        for i, output_gate in enumerate(self.output_gates):
-            a = output_gate
-            a_prime = n_wires + i
-            quantumCircuit.cx(a, a_prime)
-
-        quantumCircuit.barrier()
-        self.convert_step_2(quantumCircuit)
-
-
-cc = ClassicalCircuit("circuit.txt")
-cc.print()
-
-n_wires = cc.n_inputs + cc.n_outputs + cc.n_internal
-qc = QuantumCircuit(n_wires, 0)
-cc.convert_step_1(qc)
-print(qc)
-print()
-
-n_wires = cc.n_inputs + cc.n_outputs + cc.n_internal
-qc = QuantumCircuit(n_wires, 0)
-cc.convert_step_2(qc)
-print(qc)
-print()
-
-n_wires = cc.n_inputs + 2 * cc.n_outputs + cc.n_internal
-qc = QuantumCircuit(n_wires, 0)
-cc.convert(qc)
-print(qc)
-print()
